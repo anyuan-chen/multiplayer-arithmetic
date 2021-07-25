@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom';
+import { twodigit } from './util/addition';
 
 export default function Game() {
     const [firstNumber, setFirstNumber] = useState(0);
     const [secondNumber, setSecondNumber] = useState(0);
     const [sign, setSign] = useState("+");
     const [answer, setAnswer] = useState("0");
-    const [time, setTime] = useState(5);
-    const [score, setScore] = useState(0);
+    const [actualAnswer, setActualAnswer] = useState(0);
+    const [time, setTime] = useState(50);
+    const [score, setScore] = useState(-1);
     const history = useHistory();
     const timeRef = useRef(time);
     timeRef.current = time;
@@ -20,7 +22,18 @@ export default function Game() {
         }, 1000)
         return () => clearInterval(interval)
     }, [])
-    
+
+    useEffect(() => {
+        if (actualAnswer === parseInt(answer)) {
+            const newNums = twodigit();
+            setFirstNumber(newNums.num1);
+            setSecondNumber(newNums.num2);
+            setActualAnswer(newNums.ans);
+            setSign(newNums.sign);
+            setAnswer("");
+            setScore(score + 1);
+        }
+    }, [answer, firstNumber, secondNumber, actualAnswer, score])
 
 
     const answerChanged = (event) => {
