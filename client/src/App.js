@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Game from "./Game"
 import Intro from "./Settings"
+import Home from "./Home";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path = "/settings">
           <Intro></Intro>
+        </Route>
+        <Route path="/">
+          <Home></Home>
         </Route>
       </Switch>
     </Router>
